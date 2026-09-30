@@ -1,0 +1,14 @@
+#!/bin/bash
+ hello() {
+ 	echo "Hello!"
+ }
+
+ hello
+ hello
+ hello
+
+function tere {
+ 	echo "tere!"
+ }
+
+tere

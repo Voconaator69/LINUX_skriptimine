@@ -1,0 +1,14 @@
+#!/bin/bash
+show_user() {
+ 	whoami
+ }
+
+ show_host() {
+ 	hostname
+ }
+source functions.sh
+
+# või lühemalt:
+#. functions.sh
+show_user
+show_host

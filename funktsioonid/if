@@ -1,0 +1,23 @@
+#!/bin/bash
+fail_olemas() {
+ 	[ -f "$1" ]
+ }
+
+ if fail_olemas "/etc/passwd"; then
+ 	echo "Fail on olemas."
+ else
+ 	echo "Faili ei leitud."
+ fi
+
+kontroll() {
+ 	if [ ! -f "$1" ]; then
+     	echo "Faili pole."
+     	return 1
+ 	fi
+
+ 	echo "Fail leitud."
+ }
+
+ kontroll "/tmp/test.txt"
+
+ echo "Skript jätkab tööd."
