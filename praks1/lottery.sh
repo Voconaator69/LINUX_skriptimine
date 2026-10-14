@@ -16,38 +16,53 @@ while [ 1 ]; do
 	echo -n "Numbrid: "
 	read nr1 nr2 nr3 nr4 nr5
 
-	#Test numbrid:
-	#nr1=12
-	#nr2=13
-	#nr3=14
-	#nr4=15
-	#nr5=16
-	kontrolli_nr () {
-		local nr=$1
-		if [[ $nr =~ ^[0-9]+$ ]]; then
-			if [[ $nr -gt 0 && $nr -lt 51 ]]; then
-				if [[ $nr -ne $2 && $nr -ne $3 && $nr -ne $4 && $nr -ne $5 ]]; then
-					echo $nr >> playernumbers.txt
-				fi
-			else
-			echo "Nr pole vahemikus"
-			fi
-		else
-		echo "Vale vormistus"
-		fi
-	}
+	echo "$nr1" > playernumbers.txt
+	echo "$nr2" > playernumbers.txt
+	echo "$nr3" > playernumbers.txt
+	echo "$nr4" > playernumbers.txt
+	echo "$nr5" > playernumbers.txt
 
-	kontrolli_nr "$nr1" "$nr2" "$nr3" "$nr4" "$nr5" || exit 1
-	kontrolli_nr "$nr2" "$nr1" "$nr3" "$nr4" "$nr5" || exit 1
-	kontrolli_nr "$nr3" "$nr1" "$nr2" "$nr4" "$nr5" || exit 1
-	kontrolli_nr "$nr4" "$nr1" "$nr2" "$nr3" "$nr5" || exit 1
-	kontrolli_nr "$nr5" "$nr1" "$nr2" "$nr3" "$nr4" || exit 1
+
+
+	while IFS= read -r num; do
+	    nr="$num"
+
+	    if [[ $nr =~ ^[0-9]+$ ]]; then
+        	if [[ $nr -gt 0 && $nr -lt 51 ]]; then
+        	    if [[ $nr -ne $2 && $nr -ne $3 &&
+        	          $nr -ne $4 && $nr -ne $5 ]]; then
+                	echo "$nr"
+	            fi
+	        else
+	            echo "Nr pole vahemikus"
+	        fi
+	    else
+	        echo "Vale vormistus"
+	    fi
+	done < playernumbers.txt
+
+
+
+
+
+
+
+
+
+
+
+
+#	kontrolli_nr "$nr1" "$nr2" "$nr3" "$nr4" "$nr5" || exit 1
+#	kontrolli_nr "$nr2" "$nr1" "$nr3" "$nr4" "$nr5" || exit 1
+#	kontrolli_nr "$nr3" "$nr1" "$nr2" "$nr4" "$nr5" || exit 1
+#	kontrolli_nr "$nr4" "$nr1" "$nr2" "$nr3" "$nr5" || exit 1
+#	kontrolli_nr "$nr5" "$nr1" "$nr2" "$nr3" "$nr4" || exit 1
 clear
 	MAXCOUNT=5
 	count=0
 
 	while [ "$count" -lt "$MAXCOUNT" ]; do
-	    number=$((RANDOM % 49 + 1))
+	    number=$((RANDOM % 50 + 1))
 
 	    if ! grep -qx "$number" lottery_numbers.txt 2>/dev/null; then
 	        echo "$number" >> lottery_numbers.txt
@@ -63,7 +78,7 @@ clear
 	t=0
 	while IFS= read -r line
 		do
-				nr="nr$i"
+			nr="nr$i"
 
 				if [[ "$line" -eq "${!nr}" ]]; then
 					((t++))
@@ -93,7 +108,7 @@ clear
 	date
 echo "Uuesti? y/n"
 read vastus
-if ["$vastus" = "n"] || [ "$vastus" = "N"]; then
+if [ "$vastus" = "n" ] || [ "$vastus" = "N" ]; then
 break
 fi
 done
