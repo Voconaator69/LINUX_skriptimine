@@ -1,0 +1,21 @@
+#!/bin/bash
+#skript mis installib apache2
+
+#kontrollib kas on isntallitud
+# 1 = jah
+# 0 = ei
+#kontrollib kas apache on installitud
+value=$(dpkg-query -W -f='${Status}' apache2 | grep -c 'ok installed')
+if [[ "$value" -eq 1 ]]; then
+        echo "installitud"
+else
+        echo "puudub, installin apache"
+        apt install apache2 -y
+#kontrollib kas apache on installitud peale apache installi
+        value2=$(dpkg-query -W -f='${Status}' apache2 | grep -c 'ok installed')
+        if [[ "$value2" -eq 1 ]]; then
+                echo "installitud"
+        else
+                echo "midagi valesti"
+        fi
+fi
